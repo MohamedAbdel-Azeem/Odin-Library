@@ -15,12 +15,12 @@ function addBookToLibrary(Title,Author,Year,isRead){
 
 
 function generateDummyBooks(){
-    addBookToLibrary("The Hobbit","J.R.R. Tolkien",1937,"Yes");
-    addBookToLibrary("The Fellowship of the Ring","J.R.R. Tolkien",1954,"Yes");
-    addBookToLibrary("The Two Towers","J.R.R. Tolkien",1954,"Yes");
-    addBookToLibrary("The Return of the King","J.R.R. Tolkien",1955,"Yes");
-    addBookToLibrary("The Silmarillion","J.R.R. Tolkien",1977,"No");
-    addBookToLibrary("The Children of Hurin","J.R.R. Tolkien",2007,"No");
+    addBookToLibrary("The Hobbit","J.R.R. Tolkien",1937,"no");
+    addBookToLibrary("The Fellowship of the Ring","J.R.R. Tolkien",1954,"no");
+    addBookToLibrary("The Two Towers","J.R.R. Tolkien",1954,"no");
+    addBookToLibrary("The Return of the King","J.R.R. Tolkien",1955,"no");
+    addBookToLibrary("The Silmarillion","J.R.R. Tolkien",1977,"no");
+    addBookToLibrary("The Children of Hurin","J.R.R. Tolkien",2007,"no");
 }
 
 function generateLibraryDivs(){
@@ -28,12 +28,20 @@ function generateLibraryDivs(){
     grid.innerHTML = "";
     for (let i = 0; i < myLibrary.length; i++) {
         const book = myLibrary[i];
-        const divHtml = `<div class="book">
-        <h2>${book['Title']}</h2>
-        <hr>
-        <p>Author: ${book['Author']}</p>
-        <p>Year: ${book['Year']}</p>
-        <p>Read: ${book['isRead']}</p>
+        const divHtml = `
+        <div class="book">
+            <h2>${book['Title']}</h2>
+            <hr>
+            <p>Author: ${book['Author']}</p>
+            <p>Year: ${book['Year']}</p>
+            <div style="margin-top: 10px">
+                <p>Read?</p>
+                <br>
+                <div class="radio">
+                    <input label="Yes" type="radio" name="read${i}" value="yes"/>
+                    <input label="No" type="radio" name="read${i}" value="no" checked="checked"/>
+                </div> 
+            </div>
         </div>`;
         grid.innerHTML += divHtml;
     }
@@ -89,4 +97,13 @@ addBook.addEventListener("click",async function(){
             generateLibraryDivs();
         }
       }
+});
+
+
+document.querySelector('#book-container').addEventListener('change', function(event) {
+    if (event.target.type === 'radio') {
+        var changedRadioName = event.target.name;
+        var index = parseInt(changedRadioName.substring(4));
+        myLibrary[index].isRead = event.target.value;
+    }
 });
