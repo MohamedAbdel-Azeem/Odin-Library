@@ -17,8 +17,6 @@ header{
     margin: 2.5rem;
 }
 
-
-
 #add-book{
     background-color: transparent;
     border: 0;
@@ -47,12 +45,19 @@ header{
     fill: #fff;
 }
 
+#empty-library{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 #book-container{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
     margin: 1rem;
+    
 }
 
 @media (max-width: 600px) {
@@ -62,6 +67,7 @@ header{
 }
 
 .book{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,6 +78,25 @@ header{
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     text-align: center;
 }
+
+.remove-book{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: 0;
+}
+
+.remove-book svg{
+    fill: #b50e0e;
+    width: 25px;
+    height: 30px;
+}
+
+.remove-book:hover{
+    cursor: pointer;
+}
+
 
 #swal-inputs{
     display: flex;
@@ -133,3 +158,26 @@ header{
             width: 100%;
         }
 
+
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: #fff;
+}
+
+a svg{
+    fill: #fff;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    text-align: center;
+    margin-top: 10px;
+    padding: 0.35rem;
+}
