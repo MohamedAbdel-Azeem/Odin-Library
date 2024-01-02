@@ -1,33 +1,54 @@
-// Model and View Generator
-const myLibrary = [];
+// Library Constructor
+class Library{
+    
+    constructor(){
+        this.library = [];
+    }
 
-function Book(Title,Author,Pages,Year,isRead) {  // the constructor...
-    this.Title = Title;
-    this.Author = Author;
-    this.Pages = Pages;
-    this.Year = Year;
-    this.isRead = isRead;
+    addBookToLibrary(Title,Author,Pages,Year,isRead){
+        const book = {
+            Title: Title,
+            Author: Author,
+            Pages: Pages,
+            Year: Year,
+            isRead: isRead
+        };
+        this.library.push(book);
+    }
+
+    // Remove Book Functionality
+    LibraryremoveBook(index){
+        this.library.splice(index,1);
+    }
+
+    getLength(){
+        return this.library.length;
+    }
+
 }
 
-function addBookToLibrary(Title,Author,Pages,Year,isRead){
-    const book = new Book(Title,Author,Pages,Year,isRead);
-    myLibrary.push(book);
-}
 
+const myLibrary = new Library();
+
+
+removeBook = function(index){
+    myLibrary.LibraryremoveBook(index);
+    generateLibraryDivs();
+}
 
 
 function generateLibraryDivs(){
     const grid = document.querySelector("#book-container");
     const empty = document.querySelector("#empty-library");
-    if (myLibrary.length == 0){
+    if (myLibrary.getLength() == 0){
         empty.innerHTML = "<h3>Your Library is Empty! Add a Book to get started !</h3>";
         grid.innerHTML = "";
     }
     else{
         empty.innerHTML = "";
         grid.innerHTML = "";
-        for (let i = 0; i < myLibrary.length; i++) {
-            const book = myLibrary[i];
+        for (let i = 0; i < myLibrary.getLength(); i++) {
+            const book = myLibrary.library[i];
             const divHtml = `
             <div class="book" id="book${i}">
                 <button class="remove-book" onclick="removeBook(${i})">
@@ -101,7 +122,7 @@ addBook.addEventListener("click",async function(){
                 confirmButtonText: "Ok",
               });
         } else {
-            addBookToLibrary(formValues[0],formValues[1],formValues[2],formValues[3],"No");
+            myLibrary.addBookToLibrary(formValues[0],formValues[1],formValues[2],formValues[3],"No");
             generateLibraryDivs();
         }
       }
@@ -113,13 +134,8 @@ document.querySelector('#book-container').addEventListener('change', function(ev
     if (event.target.type === 'radio') {
         var changedRadioName = event.target.name;
         var index = parseInt(changedRadioName.substring(4));
-        myLibrary[index].isRead = event.target.value;
+        myLibrary.library[index].isRead = event.target.value;
     }
 });
 
 
-// Remove Book Functionality
-function removeBook(index){
-    myLibrary.splice(index,1);
-    generateLibraryDivs();
-}
